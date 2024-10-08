@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="~{user/header::header-fragment}"></header>
+<body class="hold-transition sidebar-mini">
+<style>
+    .ui-jqgrid tr.jqgrow td {
+        white-space: normal !important;
+        height: auto;
+        vertical-align: text-top;
+        padding-top: 2px;
+    }
+</style>
+<!-- 利用 thymeleaf + bootstrap + jqgrid + jqueryUI 实现好友列表，模板展示面板格式如下：
+    | 关注的人 | 粉丝 |
+    | 好友头像 | 好友昵称 |         关注/取消关注按钮        |
+
+    其中：
+    第一行表示俩按钮，用户点击关注的人时，展示好友列表，用户点击粉丝时，展示粉丝列表
+    第二行表示好友列表，用户点击好友头像时，跳转到好友个人主页；用户点击关注/取消关注按钮时，执行关注/取消关注操作，且按钮文本改变为取消关注/关注
+ -->
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="~{user/header::header-nav}"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="~{user/sidebar::sidebar-fragment(${path})}"></div>
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="container-fluid"></div>
+            </div>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">社交管理</h3>
+                        </div>
+                        <div class="card-body">
+                            <p id="userId" th:text="${userId}" hidden="hidden"></p>
+                            <!-- | 关注的人(按钮) | 粉丝(按钮) | -->
+                            <div class="grid-btn">
+                                <button class="btn btn-success" onclick="showFollow()">关注的人</button>
+                                <button class="btn btn-info" onclick="showFans()">粉丝</button>
+
+                                <input type="text" id="searchInput" th:placeholder="${tab == 'follow' ? '搜索关注的人' : '搜索粉丝'}" th:value="${query != null ? query : ''}" onkeypress="handleSearch(event)" class="form-control" style="display:inline-block; width: 200px; margin-right: 10px;">
+                                <input type="hidden" id="currentTab" th:value="${tab != null ? tab : 'follow'}">
+                                <button class="btn btn-primary" onclick="triggerSearch()">搜索</button>
+                            </div>
+
+                            <div id="followsContainer" th:if="${tab == 'follow'}">
+                                <table class="table table-bordered" id="follows">
+                                <!-- | 好友头像 | 好友昵称 |         关注/取消关注按钮        | -->
+                                    <tr>
+                                        <th>头像</th>
+                                        <th>昵称</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    <tr th:each="followListVO : ${follows}">
+                                        <td th:text="头像"></td>
+                                        <td>
+                                            <a th:text="${followListVO.nickname}" th:href="|/blog/archive?userToVisit=${followListVO.toUserId}|"></a>
+                                        </td>
+                                        <td>
+                                            <!-- 一开始展示都是关注的人，所以默认为取消关注 -->
+                                            <button th:id="|del${followListVO.toUserId}|" class="btn btn-info"
+                                                    th:onclick="|unfollow(${followListVO.toUserId})|" style="display: block">取消关注</button>
+                                            <button th:id="|add${followListVO.toUserId}|" class="btn btn-success"
+                                                    th:onclick="|follow(${followListVO.toUserId})|" style="display: none">关注</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div id="fansContainer" th:if="${tab == 'fans'}">
+                                <table class="table table-bordered" id="fans">
+                                <!-- | 好友头像 | 好友昵称 |         关注/取消关注按钮        | -->
+                                    <tr>
+                                        <th>头像</th>
+                                        <th>昵称</th>
+                                        <th>关注时间</th>
+                                    </tr>
+                                    <tr th:each="followListVO : ${followers}">
+                                        <!--<td th:text="${followListVO.userId}" hidden="hidden"></td>-->
+                                        <td th:text="头像"></td>
+                                        <td>
+                                            <a th:text="${followListVO.nickname}" th:href="|/user/home?userToVisit=${followListVO.userId}|"></a>
+                                        </td>
+                                        <td th:text="${#dates.format(followListVO.createAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{user/footer::footer-fragment}"></div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/static/user/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/static/user/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/static/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- userLTE App -->
+<script th:src="@{/static/user/dist/js/adminlte.min.js}"></script>
+<!-- jqgrid -->
+<script th:src="@{/static/user/plugins/jqgrid-5.3.0/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/static/user/plugins/jqgrid-5.3.0/grid.locale-cn.js}"></script>
+<!-- sweetalert -->
+<script th:src="@{/static/user/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/static/user/dist/js/social.js}"></script>
+</body>
+</html>

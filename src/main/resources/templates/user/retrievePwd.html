@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DreamLife Blog | 找回密码</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{/static/user/dist/img/icon.png}"/>
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/custom.css}">
+</head>
+<body class="hold-transition login-page">
+<div id="particles"></div>
+<div class="login-container">
+    <div class="login-box">
+        <div class="login-logo" style="color: #007bff;">
+            <img th:src="@{/static/user/dist/img/logo.png}" alt="网站Logo" style="height: 80px; margin-right: 10px;">
+        </div>
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">找回密码</p>
+                <form th:action="@{/user/retrievePwd}" method="post">
+                    <div th:if="${not #strings.isEmpty(errorMsg)}" class="form-group">
+                        <div class="alert alert-danger" th:text="${errorMsg}"></div>
+                    </div>
+                    <div th:if="${not #strings.isEmpty(successMsg)}" class="form-group">
+                        <div class="alert alert-danger" th:text="${successMsg}"></div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <span class="fa fa-envelope form-control-feedback"></span>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="请输入邮箱" required="required">
+                    </div>
+                    <div class="form-group has-feedback d-flex">
+                        <span class="fa fa-check form-control-feedback"></span>
+                        <input type="text" class="form-control verify-input" name="verifyCode" placeholder="请输入验证码" required="required">
+                        <div class="captcha-img-container">
+                            <img alt="单击图片刷新！" class="pointer" th:src="@{/common/kaptcha}"
+                                 onclick="this.src='/common/kaptcha?d='+new Date()*1">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <a th:href="@{login}" style="font-size: small" class="text-center">点此登录</a>
+                        </div>
+                        <div class="col-4">
+                            <a th:href="@{register}" style="font-size: small" class="text-center">点此注册</a>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">找回密码</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/static/user/plugins/jquery/jquery.js/jquery.min.js}"></script>
+<script th:src="@{/static/user/plugins/bootstrap/js/bootstrap.bundle.js}"></script>
+</body>
+</html>

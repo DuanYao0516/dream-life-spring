@@ -1,0 +1,102 @@
+body {
+    font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+.login-box {
+    width: 360px;
+    margin: 7% auto;
+}
+
+.login-logo h1 {
+    font-size: 2.5rem;
+}
+
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-control-feedback {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    z-index: 2;
+    color: #aaa;
+}
+
+.form-control {
+    padding-left: 2.375rem;
+}
+
+.login-box-msg {
+    margin: 0;
+    text-align: center;
+    padding: 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.captcha-img-container {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px; /* Optional: Add some spacing between input and image */
+}
+
+.captcha-img {
+    max-width: 120px; /* Adjust to desired width */
+    max-height: 45px; /* Adjust to desired height */
+    width: auto;
+    height: auto;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.verify-input {
+    max-width: 220px; /* Adjust to desired width to leave space for the captcha image */
+}
+
+.captcha-img-container {
+    margin-left: 10px; /* Optional: Add some spacing between input and image */
+}
+
+.captcha-img {
+    max-width: 100px; /* Adjust to desired width */
+    max-height: 40px; /* Adjust to desired height */
+    width: auto;
+    height: auto;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    min-height: 100vh; /* 确保容器至少占满视口高度 */
+}
+
+.login-button {
+    border-radius: 0.25rem !important; /* 使用更高的特异性和!important来覆盖其他样式 */
+}
+
+.register-container {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    /*min-height: 100vh; !* 确保容器至少占满视口高度 *!*/
+    width: 100%;
+    min-height: 100%;
+}
+
+
+

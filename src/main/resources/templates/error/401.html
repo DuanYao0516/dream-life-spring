@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ch">
+<head>
+    <title>401 Forbidden</title>
+    <!-- Add your CSS or stylesheets here -->
+    <link rel="icon" type="image/x-icon" href="{% static 'img/icon.ico' %}">
+    <!-- Add your CSS or stylesheets here -->
+    <style>
+        /* 设置页面背景色为浅灰色 */
+        body {
+            background-color: #ddd; /* 修改颜色值以更改背景色 */
+            margin: 0; /* 清除默认的页面边距 */
+            display: flex;
+            justify-content: center; /* 文本水平居中 */
+            align-items: center; /* 文本垂直居中 */
+            height: 100vh; /* 让body占据整个视窗高度 */
+            font-family: Arial, sans-serif; /* 设置字体 */
+            color: #333; /* 设置文本颜色 */
+            text-align: center;
+            flex-direction: column; /* 添加这行以确保垂直方向显示 */
+        }
+
+        /* 使标题和段落在每个标签结束后换行 */
+        h1, p {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        /* 可以添加其他样式来修改文本样式 */
+        h1 {
+            font-size: 2em;
+        }
+
+        .countdown {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+<h1>Ooh! Who do u think who u r?!!</h1>
+<p>Sorry, you are not allowed to visit this page.</p>
+<p>你谁？</p>
+<!-- Add more content or styling as per your design -->
+
+<p class="countdown" id="countdown"></p>
+
+<script>
+    // 获取倒计时元素
+    let countdownElement = document.getElementById("countdown");
+    let seconds = 5; // 设置倒计时秒数
+
+    function countdown() {
+        countdownElement.textContent = seconds + " 秒后将跳转到网站首页"; // 更新倒计时文本
+        seconds--; // 倒计时减一秒
+
+        if (seconds < 0) {
+            clearInterval(timer); // 清除定时器
+            window.location.href = "/"; // 跳转到首页
+        }
+    }
+
+    // 初始调用倒计时函数
+    countdown();
+    // 设置定时器每秒更新倒计时
+    let timer = setInterval(countdown, 1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>DreamLife | 注册</title>
+    <link rel="shortcut icon" th:href="@{/static/user/dist/img/icon.png}"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/font-awesome.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/ionicons.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/custom.css}">
+
+</head>
+<body class="hold-transition login-page">
+<div id="particles"></div>
+<div class="login-container">
+<div class="register-box">
+    <div class="register-logo" style="color: #007bff;">
+<!--        <h1>DreamLife</h1>-->
+        <img th:src="@{/static/user/dist/img/logo.png}" alt="网站Logo" style="height: 80px; margin-right: 10px;">
+
+    </div>
+    <!-- /.register-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="register-box-msg">注册</p>
+            <form th:action="@{/user/register}" method="post" onsubmit="return validateForm();">
+                <div id="error-js-validate" class="form-group" style="display: none">
+                    <div id="pre-validate" class="alert alert-danger"></div>
+                </div>
+
+                <div th:if="${not #strings.isEmpty(errorMsg)}" class="form-group">
+                    <div class="alert alert-danger" th:text="${errorMsg}"></div>
+                </div>
+                <div class="input-group mb-3">
+<!--                    <div class="input-group-append">-->
+<!--                        <div class="input-group-text">-->
+<!--                            <span class="fa fa-user"></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <input type="text" id="userName" name="userName" class="form-control" placeholder="请输入账号" required="required">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fa fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+<!--                    <div class="input-group-append">-->
+<!--                        <div class="input-group-text">-->
+<!--                            <span class="fa fa-lock"></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <input type="password" id="password" name="password" class="form-control" placeholder="请输入密码" required="required">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fa fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+<!--                    <div class="input-group-append">-->
+<!--                        <div class="input-group-text">-->
+<!--                            <span class="fa fa-lock"></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <input type="password" id="password2" name="password2" class="form-control" placeholder="请再次输入密码" required="required">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fa fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+<!--                    <div class="input-group-append">-->
+<!--                        <div class="input-group-text">-->
+<!--                            <span class="fa fa-user"></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <input type="text" id="nickname" name="nickname" class="form-control" placeholder="请输入昵称" required="required">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fa fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+<!--                    <div class="input-group-append">-->
+<!--                        <div class="input-group-text">-->
+<!--                            <span class="fa fa-envelope"></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <input type="email" id="email" name="email" class="form-control" placeholder="请输入邮箱" required="required">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fa fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+<!--                    <div class="input-group-append">-->
+<!--                        <div class="input-group-text">-->
+<!--                            <span class="fa fa-check form-control-feedback"></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <div class="col-7">
+<!--                        <span class="fa fa-check form-control-feedback"></span>-->
+                        <input type="text" class="form-control"
+                               name="verifyCode" placeholder="请输入邮箱验证码" required="required">
+                    </div>
+                    <div class="col-5">
+                        <button id="sendEmailCode" class="btn btn-primary btn-block btn-flat">发送验证码</button>
+                    </div>
+                </div>
+                <div class="form-group has-feedback d-flex"></div>
+                <div class="row">
+                    <div class="col-8">
+                        <a th:href="@{login}" style="font-size: smaller" class="text-center">已有账号？！！点这登录！！！</a>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">注册
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <!-- /.register-card-body -->
+    </div>
+</div>
+        </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/static/user/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/static/user/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/static/user/plugins/bootstrap/js/bootstrap.bundle.js}"></script>
+
+<script th:src="@{/static/user/plugins/sweetalert/sweetalert.min.js}"></script>
+
+<script th:src="@{/static/user/dist/js/public.js}"></script>
+
+<script>
+    window.history.replaceState(null, null, window.location.href);
+
+    function alert_msg(msg) {
+        document.getElementById('error-js-validate').style.display = 'block';
+        document.getElementById('pre-validate').innerHTML = msg;
+    }
+
+    function validateForm() {
+        const userName = document.getElementById('userName').value;
+        const password = document.getElementById('password').value;
+        const password2 = document.getElementById('password2').value;
+        const nickname = document.getElementById('nickname').value;
+
+        if (userName.length < 6 || userName.length > 11) {
+            alert_msg('用户名长度应在6到11个字符之间');
+            return false;
+        }
+        else if (!validUserName(userName)) {
+            alert_msg('用户名只能包含字母、数字、下划线、减号');
+            return false;
+        }
+
+        if (password.length < 6 || password.length > 20) {
+            alert_msg('密码长度应在6到20个字符之间');
+            return false;
+        }
+        else if (!validPassword(password)) {
+            alert_msg('密码至少包含字母、数字或特殊字符中的两种');
+            return false;
+        }
+
+        if (nickname.length < 1 || nickname.length > 16) {
+            alert_msg('昵称长度应在1到16个字符之间');
+            return false;
+        }
+        else if (!validNickName(nickname)) {
+            alert_msg('昵称只能包含字母、数字、下划线、减号');
+            return false;
+        }
+
+        if (password !== password2) {
+            alert_msg('两次密码输入不一致');
+            return false;
+        }
+
+        return true;
+    }
+
+    document.getElementById('sendEmailCode').addEventListener('click', function() {
+        // 获取用户填写的邮箱
+        const userEmail = document.getElementById('email').value;
+
+        // 进行邮箱格式检查
+        if (!validateEmail(userEmail)) {
+            swal('请输入有效的邮箱地址！');
+            return;
+        }
+
+        // 调用后台发送邮件的函数
+        sendEmailCode(userEmail);
+    });
+
+    function validateEmail(email) {
+        console.log('邮箱检查');
+
+        // 简单的邮箱格式检查
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function sendEmailCode(email) {
+        var sendEmailButton = $('#sendEmailCode');
+        var countdown = 60;
+
+        // 禁用按钮，并显示倒计时
+        sendEmailButton.prop('disabled', true);
+
+        function updateCountdown() {
+            sendEmailButton.text('重新发送(' + countdown + 's)');
+            countdown--;
+
+            if (countdown < 0) {
+                clearInterval(timer);
+                sendEmailButton.text('发送验证码');
+                sendEmailButton.prop('disabled', false);  // 启用按钮
+            }
+        }
+
+        // 更新倒计时，并每秒执行一次
+        var timer = setInterval(updateCountdown, 1000);
+
+        $.ajax({
+            url: '/mailCaptcha',
+            type: 'POST',
+            data: {
+                'email': email,
+            },
+            success: function(response) {
+                // 处理后台返回的响应
+                if (response.resultCode === 200) {
+                    swal('验证码已发送至您的邮箱，请查收！', {
+                        icon: "success",
+                    });
+                } else {
+                    swal(response.message, {
+                        icon: "error",
+                    });
+                    clearInterval(timer);  // 立即解除倒计时
+                    sendEmailButton.text('发送验证码');
+                    sendEmailButton.prop('disabled', false);  // 启用按钮
+                }
+            },
+            error: function(error) {
+                // 处理发送失败的情况
+                console.error('发送验证码失败，错误信息：', error);
+                swal('发送验证码失败，请稍后重试！');
+                clearInterval(timer);  // 立即解除倒计时
+                sendEmailButton.text('发送验证码');
+                sendEmailButton.prop('disabled', false);  // 启用按钮
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

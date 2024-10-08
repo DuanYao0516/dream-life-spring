@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tags</title>
+    <script th:inline="javascript">
+        function handleDelete(tagId) {
+            console.log("Deleting tag with data:", { tagId: tagId });
+            fetch('/tags/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ tagId: tagId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                location.reload(); // 删除成功后刷新页面
+            })
+            .catch(error => {
+                alert(error.message); // 弹出错误信息
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Tags</h1>
+    <form th:action="@{/tags/add}" method="post">
+        <input type="text" name="tagName" placeholder="Tag Name" required />
+        <button type="submit">Add Tag</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="tag : ${tags}">
+                <td th:text="${tag.tagId}">1</td>
+                <td th:text="${tag.tagName}">Tag Name</td>
+                <td>
+                    <button onclick="handleDelete([[${tag.tagId}]])">Delete</button>
+                </td>
+                <td th:text="${tag.tagId}">
+                   <!-- 这里直接输出tagId，用于验证Thymeleaf表达式 -->
+                   [[${tag.tagId}]]
+               </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

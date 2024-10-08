@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hellospring.mapper.BlogMapper">
+    <resultMap id="BaseResultMap" type="com.example.hellospring.entity.Blog">
+        <id column="blog_id" property="blogId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="tags" property="tags" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="views" property="views" jdbcType="BIGINT"/>
+        <result column="create_at" property="createAt" jdbcType="TIMESTAMP"/>
+        <result column="update_at" property="updateAt" jdbcType="TIMESTAMP"/>
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        blog_id, title, summary, tags, status, views, enable_comment, create_at, update_at
+    </sql>
+
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+
+<!--    Blog selectByPrimaryKey(Integer id);-->
+<!--    int updateByPrimaryKey(Blog record);-->
+<!--    int updateByPrimaryKeySelective(Blog record);-->
+<!--    int insert(Blog record);-->
+<!--    boolean deleteByPrimaryKey(Integer id);-->
+    <select id="selectByPrimaryKey" parameterType="long" resultMap="BaseResultMap">
+        SELECT * FROM blog WHERE blog_id = #{id} AND status = 1
+    </select>
+
+    <update id="updateByPrimaryKey" parameterType="com.example.hellospring.entity.Blog">
+        UPDATE blog SET
+                         title = #{title},
+                         summary = #{summary},
+                         tags = #{tags},
+                         status = #{status},
+                         views = #{views},
+                         create_at = #{createAt},
+                         update_at = #{updateAt},
+                         content = #{content}
+        WHERE blog_id = #{blogId}
+   </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.hellospring.entity.Blog">
+        UPDATE blog
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="summary != null">
+                summary = #{summary},
+            </if>
+            <if test="tags != null">
+                tags = #{tags},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="views != null">
+                views = #{views},
+            </if>
+           <if test="createAt != null">
+                create_at = #{createAt},
+            </if>
+            <if test="updateAt != null">
+                update_at = #{updateAt},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="enableComment != null">
+                enable_comment = #{enableComment},
+            </if>
+        </set>
+        WHERE blog_id = #{blogId}
+    </update>
+
+<!--    <insert id="insert" parameterType="com.example.hellospring.entity.Blog">-->
+<!--        INSERT INTO blog (user_id, title, summary, tags, status, views, enable_comment, create_at, update_at, content)-->
+<!--        VALUES (#{userId}, #{title}, #{summary}, #{blogTags}, #{blogStatus}, #{blogView}, #{enableComment}, #{createAt}, #{updateAt}, #{content})-->
+<!--    </insert>-->
+
+<!--    使用 useGeneratedKeys 属性来获取数据库自动生成的主键值-->
+
+    <insert id="insert" parameterType="com.example.hellospring.entity.Blog" useGeneratedKeys="true" keyProperty="blogId">
+        INSERT INTO blog (user_id, title, summary, tags, status, views, enable_comment, create_at, update_at, content)
+        VALUES (#{userId}, #{title}, #{summary}, #{blogTags}, #{blogStatus}, #{blogView}, #{enableComment}, #{createAt}, #{updateAt}, #{content})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.example.hellospring.entity.Blog" useGeneratedKeys="true" keyProperty="blogId">
+        INSERT INTO blog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="tags != null">
+                tags,
+            </if>
+            <if test="status != null">
+                status,
+           </if>
+            <if test="views != null">
+                views,
+            </if>
+            <if test="enableComment != null">
+                enable_comment,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="summary != null">
+                #{summary},
+            </if>
+            <if test="tags != null">
+                #{tags},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="views != null">
+                #{views},
+            </if>
+            <if test="enableComment != null">
+                #{enableComment},
+            </if>
+            <if test="createAt != null">
+                #{createAt},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+       </trim>
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="int">
+        DELETE FROM blog WHERE blog_id = #{id}
+    </delete>
+
+    <select id="findBlogList" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from blog
+        where
+        <if test="userId!=null">
+            user_id = #{userId}
+        </if>
+        <if test="status!=null">
+            AND status = #{status}
+        </if>
+        order by blog_id desc
+        <if test="pageUtil.start!=null and pageUtil.limit!=null">
+            limit #{pageUtil.start},#{pageUtil.limit}
+        </if>
+    </select>
+
+    <select id="findBlogListByType" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from blog
+        where status = 1
+        AND user_id = #{userId}
+        <if test="type!=null and type==0">
+            order by blog_id desc
+        </if>
+        <if test="type!=null and type==1">
+            order by views desc
+        </if>
+        <if test="limit!=null">
+            limit #{limit}
+        </if>
+    </select>
+
+    <select id="getTotalBlogs" parameterType="Map" resultType="int">
+        select count(*) from blog
+        where user_id = #{userId}
+        <if test="status!=null">
+            AND status = #{status}
+        </if>
+    </select>
+
+<!--    int deleteBatch(Integer[] ids);-->
+    <delete id="deleteBatch">
+        DELETE FROM blog WHERE blog_id IN
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="searchBlogs" parameterType="Map" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            blog
+        WHERE
+            user_id = #{userId}
+            <if test="searchType == 'title'">
+                AND title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'tags'">
+                AND tags LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        LIMIT #{pageUtil.start}, #{pageUtil.limit}
+    </select>
+
+    <select id="searchBlogsInArchive" parameterType="map" resultType="com.example.hellospring.entity.Blog">
+        SELECT * FROM blog
+        WHERE user_id = #{userId}
+        AND (title LIKE CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%'))
+        ORDER BY create_at DESC
+        LIMIT #{pageUtil.start}, #{pageUtil.limit}
+    </select>
+
+    <select id="getTotalBlogsByKeyword" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM blog 
+        WHERE user_id = #{userId}
+        <if test="keyword != null and keyword != ''">
+            AND (title LIKE CONCAT('%', #{keyword}, '%') OR tags LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+    </select>
+
+    <select id="getTopBlogsByViews" resultType="com.example.hellospring.entity.Blog">
+        SELECT * FROM blog
+        ORDER BY views DESC
+        LIMIT 10
+    </select>
+
+
+</mapper>

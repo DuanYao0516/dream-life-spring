@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hellospring.mapper.ConfigMapper">
+    <resultMap id="BaseResultMap" type="com.example.hellospring.entity.Config">
+        <id column="config_name" jdbcType="VARCHAR" property="configName" />
+        <result column="config_value" jdbcType="VARCHAR" property="configValue" />
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        config_name, config_value, create_at, update_at
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from config
+        where config_name = #{configName,jdbcType=VARCHAR}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from config
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.hellospring.entity.Config">
+        update config
+        <set>
+            <if test="configValue != null">
+                config_value = #{configValue,jdbcType=VARCHAR},
+            </if>
+            <if test="createAt != null">
+                create_time = #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateAt != null">
+                update_time = #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where config_name = #{configName,jdbcType=VARCHAR}
+    </update>
+</mapper>

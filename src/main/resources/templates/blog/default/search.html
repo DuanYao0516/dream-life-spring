@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{blog/default/header::head-fragment}"></head>
+<body>
+<header th:replace="~{blog/default/header::header-fragment}"></header>
+<div class="widewrapper main">
+    <div class="container">
+        <!-- <div class="clean-breadcrumb">
+            <h2 th:text="'搜索结果: ' + ${searchKeyword}"></h2>
+        </div> -->
+        <div class="row">
+            <div class="col-md-8 blog-main">
+                <!-- 搜索结果显示 -->
+                <th:block th:if="${null != searchKeyword}">
+                    <th:block th:each="blog,iterStat : ${pageResult.list}">
+                        <div class="col-md-6 col-sm-6 blog-main-card">
+                            <article class="blog-summary">
+                                <header>
+                                    <a th:href="@{'/blog/article/' + ${blog.blogId}}">
+<!--                                        <img th:src="@{/static/user/dist/img/rand/28.jpg}" alt="">-->
+                                        <img th:src="@{'/static/user/dist/img/rand/' + (${blog.blogId % 40 + 1}) + '.jpg'}" alt="">
+                                        <h3>
+                                            <th:block th:text="${blog.title}"></th:block>
+                                        </h3>
+                                    </a>
+                                </header>
+                            </article>
+                        </div>
+                        <th:block th:if="${iterStat.last and iterStat.count%2==1}">
+                            <div class="col-md-6 col-sm-6 blog-main-card"></div>
+                        </th:block>
+                    </th:block>
+                </th:block>
+                <!-- 分页 -->
+                <th:block th:if="${null != pageResult}">
+                    <ul class="blog-pagination pagination-wrapper">
+                        <li th:class="${pageResult.currPage==1}?'disabled' : ''"><a
+                                th:href="@{${pageResult.currPage==1}?'##':'/search?page=' + ${pageResult.currPage-1} + '&keyword=' + ${searchKeyword} + '&userToVisit=' + ${visitingUserId}}">&laquo;</a>
+                        </li>
+                        <li th:if="${pageResult.currPage-3 >=1}"><a
+                                th:href="@{'/search?page=' + ${pageResult.currPage-3} + '&keyword=' + ${searchKeyword} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${pageResult.currPage -3}">1</a></li>
+                        <li th:if="${pageResult.currPage-2 >=1}"><a
+                                th:href="@{'/search?page=' + ${pageResult.currPage-2} + '&keyword=' + ${searchKeyword} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${pageResult.currPage -2}">1</a></li>
+                        <li th:if="${pageResult.currPage-1 >=1}"><a
+                                th:href="@{'/search?page=' + ${pageResult.currPage-1} + '&keyword=' + ${searchKeyword} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${pageResult.currPage -1}">1</a></li>
+                        <li class="active"><a href="#" th:text="${pageResult.currPage}">1</a></li>
+                        <li th:if="${pageResult.currPage+1 <=pageResult.totalPage}"><a
+                                th:href="@{'/search?page=' + ${pageResult.currPage+1} + '&keyword=' + ${searchKeyword} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${pageResult.currPage +1}">1</a></li>
+                        <li th:if="${pageResult.currPage+2 <=pageResult.totalPage}"><a
+                                th:href="@{'/search?page=' + ${pageResult.currPage+2} + '&keyword=' + ${searchKeyword} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${pageResult.currPage +2}">1</a></li>
+                        <li th:if="${pageResult.currPage+3 <=pageResult.totalPage}"><a
+                                th:href="@{'/search?page=' + ${pageResult.currPage+3} + '&keyword=' + ${searchKeyword} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${pageResult.currPage +3}">1</a></li>
+                        <li th:class="${pageResult.currPage==pageResult.totalPage}?'disabled' : ''"><a
+                                th:href="@{${pageResult.currPage==pageResult.totalPage}?'##' : '/search?page=' + ${pageResult.currPage+1} + '&keyword=' + ${searchKeyword} + '&userToVisit=' + ${visitingUserId}}">&raquo;</a>
+                        </li>
+                    </ul>
+                </th:block>
+            </div>
+            <aside class="col-md-4 blog-aside">
+                <div class="aside-widget">
+                    <header>
+                        <h3>搜索关键字</h3>
+                    </header>
+                    <div class="body">
+                        <ul class="clean-list">
+                            <th:block>
+                                <th:block>
+                                    <h2 th:text="${searchKeyword}"></h2>
+                                </th:block>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+<!-- 引入页脚footer-fragment -->
+<footer th:replace="~{blog/default/footer::footer-fragment}"></footer>
+<script th:src="@{/static/blog/default/js/jquery.min.js}"></script>
+<script th:src="@{/static/blog/default/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/blog/default/js/modernizr.js}"></script>
+<script th:src="@{/static/blog/default/js/search.js}"></script>
+</body>
+</html>

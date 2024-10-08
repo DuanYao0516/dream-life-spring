@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>用户反馈 - DreamLife</title>
+    <link rel="shortcut icon" th:href="@{/static/user/dist/img/icon.png}"/>
+    <link rel="stylesheet" th:href="@{/static/user/plugins/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/main.css}"/>
+    <link rel="shortcut icon" th:href="@{/static/user/dist/img/icon.png}"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/font-awesome.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/ionicons.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/custom.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+        .card-title {
+            font-family: SimSun, sans-serif;
+            font-weight: bold;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/index">
+            <img th:src="@{/static/user/dist/img/logo.png}" alt="网站Logo" style="height: 40px; margin-right: 10px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" th:if="${loginUserId == null}">
+                    <a class="nav-link" th:href="@{/user/login}">登录</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId == null}">
+                    <a class="nav-link" th:href="@{/user/register}">注册</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId != null}">
+                    <a class="nav-link" th:href="@{/user/home}">个人中心</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId != null}">
+                    <a class="nav-link" th:href="@{/user/logout}">退出</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/static}">博客首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/aboutus}">关于我们</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">用户反馈</h2>
+                    <form id="feedbackForm" method="post">
+                        <div class="form-group">
+                            <label for="name">如何称呼您？</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">方便留下联系方式？</label>
+                            <input type="text" class="form-control" id="contact" name="contact" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback">您的意见或建议：</label>
+                            <textarea class="form-control" id="feedback" name="feedback" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/static/user/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/static/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/static/user/dist/js/feedback.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<footer th:fragment="footer-fragment">
+    <div class="widewrapper footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 footer-widget">
+                    <h3><i class="fa fa-user"></i>About</h3>
+                    <p th:text="${configurations.get('footerAbout')}"></p>
+                </div>
+
+                <div class="col-md-3 footer-widget">
+                    <h3><i class="fa fa-info-circle"></i>ICP</h3>
+                    <p th:text="${configurations.get('footerICP')}"></p>
+                </div>
+
+                <div class="col-md-3 footer-widget">
+                    <h3><i class="fa fa-copyright"></i>Copy Right</h3>
+                    <p th:text="${configurations.get('footerCopyRight')}"></p>
+                </div>
+
+                <div class="col-md-3 footer-widget">
+                    <h3><i class="fa fa-arrow-circle-o-up"></i>Powered By</h3>
+<!--                    <a th:href="${configurations.get('footerPoweredByURL')}">-->
+<!--                        <th:block th:text="${configurations.get('footerPoweredBy')}"></th:block>-->
+<!--                    </a>-->
+                    <a href="https://gitee.com/laozibabac">
+                        https://gitee.com/laozibabac
+                    </a><br>
+                    <a href="https://gitee.com/duan-yao">
+                        https://gitee.com/duan-yao
+                    </a><br>
+                    <a href="https://gitee.com/nnyilun">
+                        https://gitee.com/nnyilun
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

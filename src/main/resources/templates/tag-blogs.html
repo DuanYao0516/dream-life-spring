@@ -1,0 +1,179 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--&lt;!&ndash;    <title th:text="${configurations.get('websiteName')}+' | '+${pageName}">详情页</title>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta name="description" th:content="${configurations.get('websiteDescription')}">&ndash;&gt;-->
+<!--&lt;!&ndash;    <link rel="shortcut icon" th:href="@{${configurations.get('websiteIcon')}}"/>&ndash;&gt;-->
+
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.6.9/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <title>Tag: [[${tagName}]] 文章汇总</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            background-image: url(th:replace="@{/tag/dist/img/background.jpg}"); /* 使用Thymeleaf路径 */-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            height: 100vh;-->
+<!--            margin: 0;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--        }-->
+<!--        .container {-->
+<!--            width: 80%;-->
+<!--            background-color: rgba(255, 255, 255, 0.8);-->
+<!--            padding: 20px;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        nav.navbar {-->
+<!--            background-color: #9B9B9B; /* 更浅的灰色 */-->
+<!--            padding: 1rem 1.5rem;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            border-radius: 2rem;-->
+<!--        }-->
+<!--        nav a.nav-link {-->
+<!--            color: #343a40; /* 文本颜色调整以适应浅灰背景 */-->
+<!--        }-->
+<!--        h2 {-->
+<!--            margin-top: 0; /* 二级标题直接开始，无额外上边距 */-->
+<!--        }-->
+<!--        a {-->
+<!--            text-decoration: none; /* 取消所有链接的下划线 */-->
+<!--        }-->
+
+<!--        a:visited {-->
+<!--            color: inherit; /* 或具体颜色值，如：color: #343a40; */-->
+<!--        }-->
+
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    <nav class="navbar">-->
+<!--        <a class="nav-link" href="/">首页</a>-->
+<!--        <a class="nav-link" href="/user/home">我的博客</a>-->
+<!--        <a class="nav-link" href="/blog/edit">写博客</a>-->
+<!--        <a class="nav-link" href="/user/logout">退出</a>-->
+<!--    </nav>-->
+<!--    <header>-->
+<!--        <h1>标记为：[[${tagName}]] 的文章</h1>-->
+<!--    </header>-->
+<!--    <section>-->
+<!--        <div th:if="${#lists.isEmpty(blogs)}" class="text-center">-->
+<!--            <p class="lead">没有找到与此标签相关的文章。</p>-->
+<!--        </div>-->
+<!--        <ul class="list-unstyled" th:if="${not #lists.isEmpty(blogs)}">-->
+<!--            <li th:each="blog : ${blogs}">-->
+<!--                <h2><a th:href="@{/blog/article/{id}(id=${blog.blogId})}" th:text="${blog.title}"></a></h2>-->
+<!--                <p th:text="${blog.summary}" class="text-muted"></p>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </section>-->
+<!--</div>-->
+
+<!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.14.1/dist/umd/popper.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.6.9/dist/js/bootstrap.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DreamLife - 标签文章</title>
+    <link rel="shortcut icon" th:href="@{/static/user/dist/img/icon.png}"/>
+    <link rel="stylesheet" th:href="@{/static/user/plugins/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/ionicons.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/adminlte.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/custom.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        .card-title {
+            font-family: SimSun, sans-serif;
+            font-weight: bold;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        .about-content, .tag-content {
+            font-family: SimSun, sans-serif;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+        body {
+            background-color: #f4f6f9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/index">
+            <img th:src="@{/static/user/dist/img/logo.png}" alt="网站Logo" style="height: 40px; margin-right: 10px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" th:if="${loginUserId == null}">
+                    <a class="nav-link" th:href="@{/user/login}">登录</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId == null}">
+                    <a class="nav-link" th:href="@{/user/register}">注册</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId != null}">
+                    <a class="nav-link" th:href="@{/user/home}">个人中心</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId != null}">
+                    <a class="nav-link" th:href="@{/user/logout}">退出</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">博客首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/feedback}">反馈</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/aboutus}">关于我们</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">标记为：[[${tagName}]] 的文章</h2>
+                    <div class="tag-content">
+                        <div th:if="${#lists.isEmpty(blogs)}" class="text-center">
+                            <p class="lead">没有找到与此标签相关的文章。</p>
+                        </div>
+                        <ul class="list-unstyled" th:if="${not #lists.isEmpty(blogs)}">
+                            <li th:each="blog : ${blogs}">
+                                <h2><a th:href="@{/blog/article/{id}(id=${blog.blogId})}" th:text="${blog.title}"></a></h2>
+                                <p th:text="${blog.summary}" class="text-muted"></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/static/user/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/static/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

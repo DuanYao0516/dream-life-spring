@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.6.9/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Tag: [[${tagName}]] 我的文章汇总</title>
+    <style>
+        body {
+            background-image: url('path/to/your/background.jpg'); /* Replace with your background image path */
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 80%;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        nav.navbar {
+            background-color: #9B9B9B;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 2rem;
+        }
+        nav a.nav-link {
+            color: #343a40;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:visited {
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <a class="nav-link" href="/">首页</a>
+        <a class="nav-link" href="/user/home">我的博客</a>
+        <a class="nav-link" href="/blog/edit">写博客</a>
+        <a class="nav-link" href="/user/logout">退出</a>
+    </nav>
+    <header>
+        <h1>标记为：[[${tagName}]] 我的文章</h1>
+    </header>
+    <section>
+        <div th:if="${#lists.isEmpty(blogs)}" class="text-center">
+            <p class="lead">没有找到与此标签相关的文章。</p>
+        </div>
+        <ul class="list-unstyled" th:if="${not #lists.isEmpty(blogs)}">
+            <li th:each="blog : ${blogs}">
+                <h2><a th:href="@{/blog/article/{id}(id=${blog.blogId})}" th:text="${blog.title}"></a></h2>
+                <p th:text="${blog.summary}" class="text-muted"></p>
+            </li>
+        </ul>
+    </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.14.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.6.9/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

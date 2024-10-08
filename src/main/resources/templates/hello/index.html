@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>DreamLife - 首页</title>
+    <link rel="shortcut icon" th:href="@{/static/user/dist/img/icon.png}"/>
+    <link rel="stylesheet" th:href="@{/static/user/plugins/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/main.css}"/>
+    <link rel="shortcut icon" th:href="@{/static/user/dist/img/icon.png}"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/font-awesome.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/ionicons.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/custom.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+        .card-title {
+            font-family: SimSun, sans-serif;
+            font-weight: bold;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img th:src="@{/static/user/dist/img/logo.png}" alt="网站Logo" style="height: 40px; margin-right: 10px;">
+<!--            DreamLife-->
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" th:if="${loginUserId == null}">
+                    <a class="nav-link" th:href="@{/user/login}">登录</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId == null}">
+                    <a class="nav-link" th:href="@{/user/register}">注册</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId != null}">
+                    <a class="nav-link" th:href="@{/user/home}">个人中心</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId != null}">
+                    <a class="nav-link" th:href="@{/user/logout}">退出</a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/}">博客首页</a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/feedback}">反馈</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/aboutus}">关于我们</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="row mt-5">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">用户推荐</h2>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="user : ${topUsers}">
+                            <a th:href="@{/blog/archive?userToVisit={id}(id=${user.userId})}" th:text="${user.userName}"></a> - <span th:text="${user.blogCount}"></span> 篇文章
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">博客推荐</h2>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="blog : ${topBlogs}">
+                            <a th:href="@{/blog/article/{id}(id=${blog.blogId})}" th:text="${blog.title}"></a> - <span th:text="${blog.views}"></span> 浏览
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Tag推荐</h2>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="tag : ${topTags}">
+                            <a th:href="@{/tags/{name}(name=${tag.tagName})}" th:text="${tag.tagName}"></a>
+<!--                            - <span th:text="${tag.blogNum}"></span> 篇文章-->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/static/user/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/static/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

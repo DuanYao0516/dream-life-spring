@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{blog/default/header::head-fragment}"></head>
+<body>
+<header th:replace="~{blog/default/header::header-fragment}"></header>
+<div class="widewrapper main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 blog-main">
+                <th:block th:if="${null != blogPageResult}">
+                    <th:block th:each="blog,iterStat : ${blogPageResult.list}">
+                        <div class="col-md-6 col-sm-6 blog-main-card">
+                            <article class="blog-summary">
+                                <header>
+                                    <a th:href="@{'/blog/article/' + ${blog.blogId}}">
+<!--                                        <img th:src="@{/static/user/dist/img/rand/28.jpg}" alt="">-->
+                                        <img th:src="@{'/static/user/dist/img/rand/' + (${blog.blogId % 40 + 1}) + '.jpg'}" alt="">
+
+                                        <h3>
+                                            <th:block th:text="${blog.title}"></th:block>
+                                        </h3>
+                                    </a>
+                                </header>
+                            </article>
+                        </div>
+                        <th:block th:if="${iterStat.last and iterStat.count%2==1}">
+                            <div class="col-md-6 col-sm-6 blog-main-card">
+                            </div>
+                        </th:block>
+                    </th:block>
+                </th:block>
+                <th:block th:if="${null != blogPageResult}">
+                    <ul class="blog-pagination">
+                        <li th:class="${blogPageResult.currPage==1}?'disabled' : ''"><a
+                                th:href="@{${blogPageResult.currPage==1}?'##':'/blog/archive?pageNum='
+                                + ${blogPageResult.currPage-1} + '&userToVisit=' + ${visitingUserId}}">&laquo;</a>
+                        </li>
+                        <li th:if="${blogPageResult.currPage-3 >=1}"><a
+                                th:href="@{'/blog/archive?pageNum=' + ${blogPageResult.currPage-3}  + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${blogPageResult.currPage -3}">1</a></li>
+                        <li th:if="${blogPageResult.currPage-2 >=1}"><a
+                                th:href="@{'/blog/archive?pageNum=' + ${blogPageResult.currPage-2} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${blogPageResult.currPage -2}">1</a></li>
+                        <li th:if="${blogPageResult.currPage-1 >=1}"><a
+                                th:href="@{'/blog/archive?pageNum=' + ${blogPageResult.currPage-1} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${blogPageResult.currPage -1}">1</a></li>
+                        <li class="active"><a href="#" th:text="${blogPageResult.currPage}">1</a></li>
+                        <li th:if="${blogPageResult.currPage+1 <=blogPageResult.totalPage}"><a
+                                th:href="@{'/blog/archive?pageNum=' + ${blogPageResult.currPage+1} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${blogPageResult.currPage +1}">1</a></li>
+                        <li th:if="${blogPageResult.currPage+2 <=blogPageResult.totalPage}"><a
+                                th:href="@{'/blog/archive?pageNum=' + ${blogPageResult.currPage+2} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${blogPageResult.currPage +2}">1</a></li>
+                        <li th:if="${blogPageResult.currPage+3 <=blogPageResult.totalPage}"><a
+                                th:href="@{'/blog/archive?pageNum=' + ${blogPageResult.currPage+3} + '&userToVisit=' + ${visitingUserId}}"
+                                th:text="${blogPageResult.currPage +3}">1</a></li>
+                        <li th:class="${blogPageResult.currPage==blogPageResult.totalPage}?'disabled' : ''"><a
+                                th:href="@{${blogPageResult.currPage>=blogPageResult.totalPage}?'##' : '/blog/archive?pageNum='
+                                + ${blogPageResult.currPage+1} + '&userToVisit=' + ${visitingUserId}}">&raquo;</a>
+                        </li>
+                    </ul>
+                </th:block>
+            </div>
+            <aside class="col-md-4 blog-aside">
+                <div class="aside-widget">
+                    <header>
+                        <h3>最多浏览</h3>
+                    </header>
+                    <div class="body">
+                        <ul class="clean-list">
+                            <th:block th:if="${null != hotBlogs}">
+                                <th:block th:each="hotBlog : ${hotBlogs}">
+                                    <li><a th:href="@{'/blog/article/' + ${hotBlog.blogId}}">
+                                        <th:block th:text="${hotBlog.title}"></th:block>
+                                    </a></li>
+                                </th:block>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+                <div class="aside-widget">
+                    <header>
+                        <h3>最新发布</h3>
+                    </header>
+                    <div class="body">
+                        <ul class="clean-list">
+                            <th:block th:if="${null != newBlogs}">
+                                <th:block th:each="newBlog : ${newBlogs}">
+                                    <li><a th:href="@{'/blog/article/' + ${newBlog.blogId}}">
+                                        <th:block th:text="${newBlog.title}"></th:block>
+                                    </a></li>
+                                </th:block>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+                <div class="aside-widget">
+<!--                    <header>-->
+<!--                        <h3>标签栏</h3>-->
+<!--                    </header>-->
+<!--                    <div class="body clearfix">-->
+<!--                        <ul class="tags">-->
+<!--                            <th:block th:if="${null != hotTags}">-->
+<!--                                <th:block th:each="hotTag : ${hotTags}">-->
+<!--                                    <li><a th:href="@{'/tag/' + ${hotTag.tagName}}">-->
+<!--                                        <th:block th:text="${hotTag.tagName}+'('+${hotTag.tagCount}+')'"></th:block>-->
+<!--                                    </a></li>-->
+<!--                                </th:block>-->
+<!--                            </th:block>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                    <header>
+                        <h3>本站热门标签</h3>
+                    </header>
+                    <div class="body">
+                        <ul class="tags">
+                            <li th:each="tag : ${hotTags}">
+                                <a th:href="@{'/tags/' + ${tag.tagName}}" th:text="${tag.tagName}"></a>
+                            </li>
+                        </ul>
+                        <div style="clear: both;"></div> <!-- 清除浮动 -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+<!-- 引入页脚footer-fragment -->
+<footer th:replace="~{blog/default/footer::footer-fragment}"></footer>
+<script th:src="@{/static/blog/default/js/jquery.min.js}"></script>
+<script th:src="@{/static/blog/default/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/blog/default/js/modernizr.js}"></script>
+<script th:src="@{/static/blog/default/js/search.js}"></script>
+</body>
+</html>

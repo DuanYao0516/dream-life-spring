@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>DreamLife - 关于我们</title>
+    <link rel="shortcut icon" th:href="@{/static/user/dist/img/icon.png}"/>
+    <link rel="stylesheet" th:href="@{/static/user/plugins/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/main.css}"/>
+    <link rel="shortcut icon" th:href="@{/static/user/dist/img/icon.png}"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/font-awesome.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/ionicons.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/static/user/dist/css/custom.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+        .card-title {
+            font-family: SimSun, sans-serif;
+            font-weight: bold;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        .about-content {
+            font-family: SimSun, sans-serif;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/index">
+            <img th:src="@{/static/user/dist/img/logo.png}" alt="网站Logo" style="height: 40px; margin-right: 10px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" th:if="${loginUserId == null}">
+                    <a class="nav-link" th:href="@{/user/login}">登录</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId == null}">
+                    <a class="nav-link" th:href="@{/user/register}">注册</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId != null}">
+                    <a class="nav-link" th:href="@{/user/home}">个人中心</a>
+                </li>
+                <li class="nav-item" th:if="${loginUserId != null}">
+                    <a class="nav-link" th:href="@{/user/logout}">退出</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">博客首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/feedback}">反馈</a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/aboutus}">关于我们</a>-->
+<!--                </li>-->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">关于我们</h2>
+                    <div class="about-content">
+                        <p>欢迎来到 DreamLife 博客网站！我们致力于为用户提供一个分享和交流的平台。无论您是想要分享您的生活故事、技术经验，还是探索新的知识和见解，这里都是您的理想之地。</p>
+                        <p>我们的目标是创建一个包容和支持的社区，让每个人都能自由地表达自己。我们相信每个人都有独特的故事和观点，值得被聆听和分享。</p>
+                        <p>我们的网站功能包括：</p>
+                        <ul>
+                            <li>用户注册和登录</li>
+                            <li>用户关注与交流</li>
+                            <li>发布和管理博客文章</li>
+                            <li>浏览和评论其他用户的文章</li>
+                            <li>根据标签和用户搜索文章</li>
+                            <li>反馈和建议</li>
+                        </ul>
+                        <p>感谢您访问我们的网站！如果您有任何问题或建议，请随时通过反馈页面与我们联系。</p>
+                        <p>祝您在 DreamLife 度过愉快的时光！</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Developer Card -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h2 class="card-title">Powered By</h2>
+                    <div class="about-content">
+                        <p>主要开发者：</p>
+                        <ul>
+                            <li>lin (Gitee: <a href="https://gitee.com/laozibabac" target="_blank">laozibabac</a>)</li>
+                            <li>duan (Gitee: <a href="https://gitee.com/duan-yao" target="_blank">duan-yao</a>)</li>
+                        </ul>
+                        <p>联系我们：<a href="mailto:dreamlife2024@163.com">dreamlife2024@163.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/static/user/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/static/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
